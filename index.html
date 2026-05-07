@@ -506,103 +506,102 @@ function HomeScreen({ go }) {
 
   return (
     <div style={{ flex:1, display:'flex', flexDirection:'column', background:'#000', overflow:'hidden', position:'relative' }}>
-      {/* 풀블리드 배경 — 크로스페이드 */}
+
+      {/* ── 풀블리드 슬라이드 배경 ── */}
       {slides.map((s, i) => (
-        <div key={i} style={{ position:'absolute', inset:0,
+        <div key={i} style={{
+          position:'absolute', inset:0,
           backgroundImage:`url(${s.img})`,
-          backgroundSize:'cover', backgroundPosition:'center 30%',
+          backgroundSize:'cover', backgroundPosition:'center 35%',
           opacity: i === slide ? 1 : 0,
-          transition:'opacity 1.2s ease-in-out',
+          transition:'opacity 1.5s ease-in-out',
         }} />
       ))}
-      <div style={{ position:'absolute', inset:0,
-        backgroundSize:'cover', backgroundPosition:'center 30%' }} />
-      {/* 그라디언트 오버레이 */}
-      <div style={{ position:'absolute', inset:0,
-        background:'linear-gradient(180deg, rgba(10,25,50,0.3) 0%, rgba(10,25,50,0) 30%, rgba(10,25,50,0.75) 70%, rgba(10,25,50,0.95) 100%)' }} />
 
-      <StatusBar light />
+      {/* ── 그라디언트 오버레이: 상단+하단만 어둡게 ── */}
+      <div style={{ position:'absolute', inset:0,
+        background:'linear-gradient(180deg, rgba(8,20,45,0.55) 0%, rgba(8,20,45,0.0) 22%, rgba(8,20,45,0.0) 48%, rgba(8,20,45,0.72) 70%, rgba(8,20,45,0.96) 100%)' }} />
 
-      {/* 로고 & 위치 */}
-      <div style={{ position:'relative', display:'flex', justifyContent:'space-between', alignItems:'center', padding:'4px 24px 0' }}>
-        <IdinoLogo light />
-        <div style={{ display:'flex', alignItems:'center', gap:6, background:'rgba(255,255,255,0.12)', backdropFilter:'blur(16px)', border:'1px solid rgba(255,255,255,0.22)', padding:'6px 12px', borderRadius:999 }}>
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span style={{ fontFamily:fEN, fontSize:11, color:'rgba(255,255,255,0.9)', letterSpacing:'0.18em' }}>JEJU · 제주</span>
+      {/* ── 상단: StatusBar + 로고 ── */}
+      <div style={{ position:'relative', zIndex:10 }}>
+        <StatusBar light />
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'2px 24px 0' }}>
+          <IdinoLogo light />
+          <div style={{ display:'flex', alignItems:'center', gap:5, background:'rgba(255,255,255,0.10)', backdropFilter:'blur(16px)', border:'1px solid rgba(255,255,255,0.18)', padding:'5px 11px', borderRadius:999 }}>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span style={{ fontFamily:fEN, fontSize:10.5, color:'rgba(255,255,255,0.85)', letterSpacing:'0.18em' }}>JEJU · 제주</span>
+          </div>
         </div>
       </div>
 
-      {/* 메인 카피 */}
-      <div style={{ position:'relative', flex:1, display:'flex', flexDirection:'column', justifyContent:'flex-end', overflowY:'auto' }}>
+      {/* ── 중앙: 메인 카피 (이미지 위 여백 공간) ── */}
+      <div style={{ position:'relative', zIndex:10, flex:1, display:'flex', flexDirection:'column', justifyContent:'flex-end', padding:'0 28px 24px' }}>
 
-        {/* 카피 영역 — 패딩 있음 */}
-        <div style={{ padding:'0 28px', marginBottom:0 }}>
-        <div style={{ fontFamily:fEN, fontSize:10, color:'rgba(255,255,255,0.55)', letterSpacing:'0.38em', marginBottom:14, textTransform:'uppercase', transition:'opacity 0.6s' }}>
+        {/* vol 레이블 */}
+        <div style={{ fontFamily:fEN, fontSize:10, color:'rgba(255,255,255,0.50)', letterSpacing:'0.36em', marginBottom:16, textTransform:'uppercase' }}>
           {cur.vol}
         </div>
 
-        <div style={{ fontFamily:fEN, fontStyle:'italic', fontSize:34, lineHeight:1.1,  color:'#fff', fontWeight:300, letterSpacing:'-0.02em', marginBottom:12, transition:'opacity 0.6s' }}>
+        {/* 메인 카피 — 크고 여유있게 */}
+        <div style={{ fontFamily:fEN, fontStyle:'italic', fontSize:38, lineHeight:1.08, color:'#fff', fontWeight:300, letterSpacing:'-0.02em', marginBottom:14 }}>
           {cur.enLine1}<br/>{cur.enLine2}
         </div>
 
-        <div style={{ fontFamily:fKR, fontSize:14.5, color:'rgba(255,255,255,0.78)', lineHeight:1.65, fontWeight:400, marginBottom:22, maxWidth:260, whiteSpace:'pre-line', transition:'opacity 0.6s' }}>
+        {/* 한국어 카피 */}
+        <div style={{ fontFamily:fKR, fontSize:14, color:'rgba(255,255,255,0.72)', lineHeight:1.7, fontWeight:400, marginBottom:24, maxWidth:240, whiteSpace:'pre-line' }}>
           {cur.kr}
         </div>
+
         {/* 슬라이드 인디케이터 */}
-        <div style={{ display:'flex', gap:6, marginBottom:20 }}>
+        <div style={{ display:'flex', gap:6, marginBottom:28 }}>
           {slides.map((_, i) => (
-            <button key={i} onClick={() => setSlide(i)} style={{ width: i===slide ? 22 : 6, height:6, borderRadius:99, background: i===slide ? '#fff' : 'rgba(255,255,255,0.35)', border:'none', cursor:'pointer', padding:0, transition:'all 0.4s' }} />
+            <button key={i} onClick={() => setSlide(i)} style={{
+              width: i===slide ? 24 : 6, height:6, borderRadius:99,
+              background: i===slide ? '#fff' : 'rgba(255,255,255,0.32)',
+              border:'none', cursor:'pointer', padding:0, transition:'all 0.4s'
+            }} />
           ))}
         </div>
-        </div>{/* 카피 패딩 닫기 */}
 
-        {/* 진입 카드 2개 — 패딩 있음 */}
-        <div style={{ padding:'0 28px' }}>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+        {/* ── 하단 진입 카드 2개 ── */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:4 }}>
 
-          {/* 런케이션 */}
-          <button onClick={() => go('list-learncation')} style={{ background:'rgba(255,255,255,0.96)', backdropFilter:'blur(24px)', border:'none', padding:'20px 16px 18px', textAlign:'left', cursor:'pointer', borderRadius:12, position:'relative', overflow:'hidden' }}>
-            <div style={{ position:'absolute', top:0, right:0, width:60, height:60, background:`radial-gradient(circle at top right, ${T.purple}22, transparent 70%)` }} />
-            <div style={{ fontFamily:fEN, fontSize:9.5, color:T.purple, letterSpacing:'0.28em', marginBottom:10, textTransform:'uppercase', fontWeight:600 }}>01 / Learn</div>
-            <div style={{ fontFamily:fKR, fontSize:20, color:T.oceanInk, fontWeight:800, letterSpacing:'-0.03em', marginBottom:4 }}>런케이션</div>
-            <div style={{ fontFamily:fKR, fontSize:11.5, color:T.inkSub, lineHeight:1.5 }}>일과 휴식이<br/>흐르는 공간</div>
+          {/* 런케이션 카드 */}
+          <button onClick={() => go('list-learncation')} style={{
+            background:'rgba(255,255,255,0.95)', backdropFilter:'blur(28px)',
+            border:'none', padding:'22px 18px 20px', textAlign:'left',
+            cursor:'pointer', borderRadius:14, position:'relative', overflow:'hidden'
+          }}>
+            <div style={{ position:'absolute', top:0, right:0, width:64, height:64,
+              background:`radial-gradient(circle at top right, ${T.purple}28, transparent 70%)` }} />
+            <div style={{ fontFamily:fEN, fontSize:9, color:T.purple, letterSpacing:'0.28em', marginBottom:10, textTransform:'uppercase', fontWeight:700 }}>01 / Learn</div>
+            <div style={{ fontFamily:fKR, fontSize:21, color:T.oceanInk, fontWeight:800, letterSpacing:'-0.03em', marginBottom:5 }}>런케이션</div>
+            <div style={{ fontFamily:fKR, fontSize:11, color:T.inkSub, lineHeight:1.55 }}>일과 휴식이<br/>흐르는 공간</div>
             <div style={{ position:'absolute', bottom:14, right:14, width:26, height:26, borderRadius:'50%', background:T.purple, display:'flex', alignItems:'center', justifyContent:'center' }}>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </div>
           </button>
 
-          {/* 스테이 */}
-          <button onClick={() => go('list-stay')} style={{ background:'rgba(255,255,255,0.10)', backdropFilter:'blur(24px)', border:'1px solid rgba(255,255,255,0.28)', padding:'20px 16px 18px', textAlign:'left', cursor:'pointer', borderRadius:12, position:'relative', overflow:'hidden', color:'#fff' }}>
-            <div style={{ fontFamily:fEN, fontSize:9.5, letterSpacing:'0.28em', marginBottom:10, textTransform:'uppercase', fontWeight:600, color:'rgba(255,255,255,0.6)' }}>02 / Stay</div>
-            <div style={{ fontFamily:fKR, fontSize:20, fontWeight:800, letterSpacing:'-0.03em', marginBottom:4 }}>스테이</div>
-            <div style={{ fontFamily:fKR, fontSize:11.5, color:'rgba(255,255,255,0.65)', lineHeight:1.5 }}>머무름이<br/>풍경이 되는 곳</div>
-            <div style={{ position:'absolute', bottom:14, right:14, width:26, height:26, borderRadius:'50%', border:'1.5px solid rgba(255,255,255,0.5)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          {/* 스테이 카드 */}
+          <button onClick={() => go('list-stay')} style={{
+            background:'rgba(255,255,255,0.09)', backdropFilter:'blur(28px)',
+            border:'1px solid rgba(255,255,255,0.26)', padding:'22px 18px 20px',
+            textAlign:'left', cursor:'pointer', borderRadius:14,
+            position:'relative', overflow:'hidden', color:'#fff'
+          }}>
+            <div style={{ fontFamily:fEN, fontSize:9, letterSpacing:'0.28em', marginBottom:10, textTransform:'uppercase', fontWeight:700, color:'rgba(255,255,255,0.55)' }}>02 / Stay</div>
+            <div style={{ fontFamily:fKR, fontSize:21, fontWeight:800, letterSpacing:'-0.03em', marginBottom:5 }}>스테이</div>
+            <div style={{ fontFamily:fKR, fontSize:11, color:'rgba(255,255,255,0.60)', lineHeight:1.55 }}>머무름이<br/>풍경이 되는 곳</div>
+            <div style={{ position:'absolute', bottom:14, right:14, width:26, height:26, borderRadius:'50%', border:'1.5px solid rgba(255,255,255,0.45)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </div>
           </button>
-        </div>
 
-        </div>{/* 카드 패딩 닫기 */}
-
-        {/* ── 공용 공간 섹션 — 풀블리드 ── */}
-        <div style={{ paddingTop:16, paddingBottom:4 }}>
-          <FacilitiesSection light />
-        </div>
-
-        {/* 현재 진행 중 프로그램 */}
-        <div style={{ padding:'0 28px 20px' }}>
-        <div onClick={() => go('list-learncation')} style={{ marginTop:14, background:'rgba(255,255,255,0.08)', backdropFilter:'blur(16px)', border:'1px solid rgba(255,255,255,0.15)', borderRadius:10, padding:'12px 16px', display:'flex', alignItems:'center', gap:10, cursor:'pointer' }}>
-          <div style={{ width:8, height:8, borderRadius:'50%', background:T.yellow, flexShrink:0, boxShadow:`0 0 8px ${T.yellow}` }} />
-          <div style={{ flex:1 }}>
-            <span style={{ fontSize:11, color:'rgba(255,255,255,0.5)', fontFamily:fEN, letterSpacing:'0.12em' }}>NOW OPEN  </span>
-            <span style={{ fontSize:12, color:'rgba(255,255,255,0.9)', fontFamily:fKR, fontWeight:500 }}>5월 런케이션 3개 모집 중</span>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
         </div>
       </div>
 
-        </div>{/* 배너 패딩 닫기 */}
-      <div style={{ position:'relative', background:T.bgCard }}>
+      {/* ── TabBar ── */}
+      <div style={{ position:'relative', zIndex:10, background:T.bgCard }}>
         <TabBar active="home" onNavigate={(id) => {
           if (id === 'learncation') go('list-learncation');
           else if (id === 'stay') go('list-stay');
@@ -613,6 +612,7 @@ function HomeScreen({ go }) {
     </div>
   );
 }
+
 
 // ════════════════════════════════════════
 // 화면 2 — 리스트
